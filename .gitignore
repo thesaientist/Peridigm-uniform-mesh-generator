@@ -1,0 +1,5 @@
+# files to ignore
+.DS_Store
+
+# generated output meshes and nodesets
+*.txt
