@@ -13,7 +13,7 @@ from mpl_toolkits.mplot3d import Axes3D
 height = 4*100                         # Height of cylinder
 radius = 15*100                         # Radius of cylinder
 rw = 0.9*100                            # Radius of wellbore
-dx = 0.45001*100                           # Discretization size
+dx = 0.450001*100                        # Discretization size
 dV = dx**3                              # Volume associated with each node
 blk_num = 1                             # Block number (material properties)
 horizon = 3*dx                          # Horizon size (3 * mesh size)
@@ -127,8 +127,9 @@ for lst_num in range(len(nodeset1)):
     xyz_ns[lst_num,2] = current_node[3]
 """
 
-"""PLOT USING MATPLOTLIB"""
+"""PLOT USING MATPLOTLIB
 fig = plt.figure()
 ax = fig.add_subplot(111,projection='3d')
 ax.scatter(node_array[:,0],node_array[:,1],node_array[:,2])
 plt.show()
+"""
