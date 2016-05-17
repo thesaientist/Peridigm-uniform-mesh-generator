@@ -15,7 +15,7 @@ radius = 15*100                         # Radius of cylinder
 rw = 0.9*100                            # Radius of wellbore
 dx = 0.450001*100                        # Discretization size
 dV = dx**3                              # Volume associated with each node
-blk_num = 1                             # Block number (material properties)
+blk_num = 1                             # Block number (material properties) - default 1
 horizon = 3*dx                          # Horizon size (3 * mesh size)
 
 # Target fracture zone (nodesets)
@@ -41,8 +41,6 @@ volume that belongs in the domain of interest and disregard other nodes"""
 nodes = []                          # All nodes in cylindrical reservoir domain
 nodeset1 = []                       # All nodes for which HEGF pressure pulse in wellbore is applied
 nodeset2 = []                       # All nodes near outer boundary where in-situ compression is directly applied (at least as thich as horizon size)
-nodeset3 = []                       # All nodes z>=0 (for the Peridigm full domain constraint issue in z direction)
-nodeset4 = []                       # All nodes z<0 (for the Peridigm full domain constraint issue in z direction)
 nodeset_full = []                   # Giving full domain as a nodeset (for Peridigm full domain constraint issue in z direction)
 node_count = 0                     # for tracking node number (use in nodesets)
 # For specifying nodesets, count starts at 1 for the first node in the input
@@ -61,26 +59,21 @@ for k in range(x3_n):
 
             # Criteria to check for existence of node in desired domain shape
             if d > rw and d <= radius:
+                blk_num = 1             # default block number
                 node_count += 1
-                node_info = [node_count,x1_coord,x2_coord,x3_coord,blk_num,dV]
-                nodes.append(node_info)
-                nodeset_full.append(node_count)
-
-                # z>=0 portion of full set of nodes in the domain (for Peridigm full domain constraint issue)
-                if x3_coord>=0:
-                    nodeset3.append(node_count)
-
-                # z<0 portion of full set of nodes in the domain (for Peridigm full domain constraint issue)
-                if x3_coord<0:
-                    nodeset4.append(node_count)
 
                 # Criteria for in-domain node to be in nodeset 1 (for HEGF boundary condition (BC) application)
                 if d <= (rw + n_lay * dx) and abs(x3_coord) < zwf/2.0:
                     nodeset1.append(node_count)
+                    blk_num = 2                 # Change block number to 2 (for turning off damage model in these nodes)
 
                 # Criterial for in-domain node to be in nodeset 2 (for direct in-situ stress application via displacement BC)
                 if d >= (radius-horizon) and d <= radius:
                     nodeset2.append(node_count)
+
+                node_info = [node_count,x1_coord,x2_coord,x3_coord,blk_num,dV]
+                nodes.append(node_info)
+                nodeset_full.append(node_count)
 
 
 """ WRITE NODES TO TXT FILE """
