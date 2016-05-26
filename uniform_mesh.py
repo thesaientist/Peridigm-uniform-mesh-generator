@@ -97,7 +97,7 @@ with open('nodeset1.txt','w') as f:
 with open('nodeset2.txt','w') as f:
     for node_num in nodeset2:
         f.write(str(node_num) + '\n')
-
+"""
 with open('nodeset3.txt','w') as f:
     for node_num in nodeset3:
         f.write(str(node_num) + '\n')
@@ -105,7 +105,7 @@ with open('nodeset3.txt','w') as f:
 with open('nodeset4.txt','w') as f:
     for node_num in nodeset4:
         f.write(str(node_num) + '\n')
-
+"""
 with open('nodeset_full.txt','w') as f:
     for node_num in nodeset_full:
         f.write(str(node_num) + '\n')
