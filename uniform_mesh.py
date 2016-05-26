@@ -56,7 +56,7 @@ for k in range(x3_n):
             x1_coord = (-L1/2.0 + dx/2.0) + i*dx
             loc = [0,0,x3_coord,x1_coord,x2_coord,x3_coord]
             d = cd.dist(loc)
-
+            vol = dV + 0.1*dV*2*(0.5-np.random.random_sample())     # generate +/- 10% variation around dV
             # Criteria to check for existence of node in desired domain shape
             if d > rw and d <= radius:
                 blk_num = 1             # default block number
@@ -71,7 +71,7 @@ for k in range(x3_n):
                 if d >= (radius-horizon) and d <= radius:
                     nodeset2.append(node_count)
 
-                node_info = [node_count,x1_coord,x2_coord,x3_coord,blk_num,dV]
+                node_info = [node_count,x1_coord,x2_coord,x3_coord,blk_num,vol]
                 nodes.append(node_info)
                 nodeset_full.append(node_count)
 
